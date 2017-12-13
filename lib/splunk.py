@@ -76,7 +76,7 @@ class Splunk_Sort():
             # GET请求中ng_request_url_short然而并不会存在？，但是为了保持算法一致，还是进行分割一下
             MD5 = self.md5('GET' + result['ng_request_url_short'].split('?')[0])
             request_json = {
-                'method': 'GET',
+                'method': 'GET' if result['ng_request_url_short'].strip().upper() =='GET' else 'POST',
                 'protocol': 'http://',
                 'domain': result['last(ng_request_domain)'],
                 'ng_request_url_short': result['ng_request_url_short'],

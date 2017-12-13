@@ -1,0 +1,2 @@
+redis==2.10.5
+splunk_sdk==1.6.2
