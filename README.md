@@ -73,7 +73,7 @@
 	
 	# query保存查询语句
 	# earliest_time查询时间，从现在往前推多长时间
-	# max_time 表示最大查询时间
+	# max_time 表示任务执行最大时间
 	rule = {
 	    'query': '''
 	        search index=nginx ng_request_method=GET ng_status!=40*
