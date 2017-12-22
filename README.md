@@ -40,8 +40,6 @@
 
 ## Deploy ##
 	
-	部署分为两块，一个扫描任务执行Worker、一个是ssrf漏洞验证Worker
-
 	1、任意机子安装redis
 	$ yum install redis
 	$ vim /etc/redis.conf

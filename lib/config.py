@@ -22,7 +22,9 @@ rule = {
         |regex ng_request_url_short != "(?i)(.+\.(htm|html|ico|mp3|js|jpg|jped|gif|xml|zip|css|png|txt|ttf|rar|gz))$"
         |regex ng_request_url_short != "(?i)((\d+){5,})"
         |rex field=ng_request_url_short mode=sed "s/\/$//g"
-        |stats last(ng_request_domain) last(ng_query) by ng_request_url_short, ng_status, ng_request_method''',
+        |stats last(ng_request_domain) last(ng_query) by ng_request_url_short, ng_status, ng_request_method
+        |rename "last(ng_request_domain)" as ng_request_domain
+        |rename "last(ng_query)" as ng_query''',
     'earliest_time': '-1m',
     'max_time': 60
 }
