@@ -76,16 +76,19 @@
 	# query保存查询语句
 	# earliest_time查询时间，从现在往前推多长时间
 	# max_time 表示任务执行最大时间
+	#请使用rename函数保证字段名称一致，ng_request_method、ng_request_domain、ng_request_url_short、ng_query、ng_status
 	rule = {
-	    'query': '''
-	        search index=nginx ng_request_method=GET ng_status!=40*
-	        |eval ng_request_url_short=lower(ng_request_url_short)
-	        |regex ng_request_url_short != "(?i)(.+\.(htm|html|ico|mp3|js|jpg|jped|gif|xml|zip|css|png|txt|ttf|rar|gz))$"
-	        |regex ng_request_url_short != "(?i)((\d+){5,})"
-	        |rex field=ng_request_url_short mode=sed "s/\/$//g"
-	        |stats last(ng_request_domain) last(ng_query) by ng_request_url_short, ng_status, ng_request_method''',
-	    'earliest_time': '-1m',
-	    'max_time': 60
+    'query': '''
+        search index=nginx ng_request_method=GET ng_status!=40*
+        |eval ng_request_url_short=lower(ng_request_url_short)
+        |regex ng_request_url_short != "(?i)(.+\.(htm|html|ico|mp3|js|jpg|jped|gif|xml|zip|css|png|txt|ttf|rar|gz))$"
+        |regex ng_request_url_short != "(?i)((\d+){5,})"
+        |rex field=ng_request_url_short mode=sed "s/\/$//g"
+        |stats last(ng_request_domain) last(ng_query) by ng_request_url_short, ng_status, ng_request_method
+        |rename "last(ng_request_domain)" as ng_request_domain
+        |rename "last(ng_query)" as ng_query''',
+    'earliest_time': '-1m',
+    'max_time': 60
 	}
 
 
